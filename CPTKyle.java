@@ -12,8 +12,10 @@ public class CPTKyle{
 		con.println("Welcome to Connect 4");
 		con.println("Play game (p)");
 		con.println("View High Scores (s)");
+		con.println("Themes (t)");
 		con.println("Help (h)");
 		con.println("Quit (q)");
+
 		
 		con.println("What would you like to do?: ");
 		strChoice = con.readLine();
@@ -34,13 +36,26 @@ public class CPTKyle{
 			con.print("What is P2's name: ");
 			strNameP2 = con.readLine();
 			
-			//Array
+			//Creating the Array
+			int introws = 6;
+			int intcolumns = 7;
 			int intBoard[][];
-			intBoard = new int[6][7];
+			intBoard = new int[introws][intcolumns];
+			
+			//Make and print board
+			con.println("Game Start!");
+			con.println("   0  1  2  3  4  5  6");
+			
+			for(int introw = 0; introw < introws; introw++){
+				con.print(introw + " ");
+				for(int intcolumn = 0; intcolumn < intcolumns; intcolumn++){
+					con.print("[ ]");	
+				}
+				con.println();
+			}
+			
 
 			
-			}
-		
-		
+		}
 	}
 }
