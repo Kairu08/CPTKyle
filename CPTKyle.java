@@ -37,14 +37,14 @@ public class CPTKyle{
 			strNameP2 = con.readLine();
 			
 			//Creating the Array
-			int introws = 6;
-			int intcolumns = 7;
+			int introws = 7;
+			int intcolumns = 8;
 			int intBoard[][];
 			intBoard = new int[introws][intcolumns];
 			
 			//Make and print board
 			con.println("Game Start!");
-			con.println("   0  1  2  3  4  5  6");
+			con.println("   0  1  2  3  4  5  6  7");
 			
 			for(int introw = 0; introw < introws; introw++){
 				con.print(introw + " ");
