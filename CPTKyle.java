@@ -4,7 +4,11 @@ import java.awt.image.*;
 
 public class CPTKyle{
 	public static void main(String[] args){
-		Console con = new Console();
+		Console con = new Console(1280,720);
+		
+		//Background Image
+		BufferedImage imgconnectfour = con.loadImage("connectfour.jpg");
+		con.drawImage(imgconnectfour,0,0);
 		
 		String strChoice;
 		
@@ -36,9 +40,11 @@ public class CPTKyle{
 			con.print("What is P2's name: ");
 			strNameP2 = con.readLine();
 			
-			//Creating the Array
-			int introws = 7;
-			int intcolumns = 8;
+			//Creating the Array and Variables
+			int intP1Wins = 0;
+			int intP2Wins = 0;
+			int introws = 6;
+			int intcolumns = 7;
 			int intBoard[][];
 			intBoard = new int[introws][intcolumns];
 			
@@ -46,13 +52,14 @@ public class CPTKyle{
 			con.println("Game Start!");
 			con.println("   0  1  2  3  4  5  6  7");
 			
-			for(int introw = 0; introw < introws; introw++){
+			for(int introw = 0; introw <= introws; introw++){
 				con.print(introw + " ");
-				for(int intcolumn = 0; intcolumn < intcolumns; intcolumn++){
+				for(int intcolumn = 0; intcolumn <= intcolumns; intcolumn++){
 					con.print("[ ]");	
 				}
 				con.println();
 			}
+			
 			
 
 			
