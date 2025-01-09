@@ -48,19 +48,62 @@ public class CPTKyle{
 			int intBoard[][];
 			intBoard = new int[introws][intcolumns];
 			
-			//Make and print board
-			con.println("Game Start!");
-			con.println("   0  1  2  3  4  5  6  7");
+			//Reset game board
+			boolean blnPlayAgain = true;
 			
-			for(int introw = 0; introw <= introws; introw++){
-				con.print(introw + " ");
-				for(int intcolumn = 0; intcolumn <= intcolumns; intcolumn++){
-					con.print("[ ]");	
+			while(blnPlayAgain){
+				for(int introw = 0; introw < introws; introw++){
+					for(int intcolumn = 0; intcolumn < intcolumns; intcolumn++){
+						intBoard[introw][intcolumn] = 0;
+					}	
 				}
-				con.println();
+			
+			//Set boolean variable for a win to false
+			boolean blnWon = false;
+			int intcurrentplayer = 1;
+			
+			//Player Turn
+			int intPlayerTurn = 1;
+			
+			while(blnWon == false){
+				//Make and print board
+				con.println("Game Start!");
+				con.println("   1  2  3  4  5  6  7");
+				for(int introw = 0; introw < introws; introw++){
+					con.print((introw+1) + " ");
+					for(int intcolumn = 0; intcolumn < intcolumns; intcolumn++){
+						if(intBoard[introw][intcolumn] == 0){
+							con.print("[ ]");	
+						}else{
+							con.print("[" + intBoard[introw][intcolumn] + "]");
+						}
+					}
+					con.println();
+				}
+				//blnWon = true; 
+				//Asks Player which column their piece goes into
+				String strPlayerName;
+				
+				if(intcurrentplayer == 1){
+					strPlayerName = strNameP1;
+				}else{
+					strPlayerName = strNameP2;
+					
+				}
+				con.println(strPlayerName + "choose a column.");
+				
+				int intChosenColumn;
+				boolean blnvalidColumn = false;
+			
+				while(blnvalidColumn == false){
+					intChosenColumn = con.readInt();
+				}
+				
+				
 			}
 			
-			
+                //blnPlayAgain = false;
+		}
 
 			
 		}
