@@ -40,6 +40,8 @@ public class CPTKyle{
 			con.print("What is P2's name: ");
 			strNameP2 = con.readLine();
 			
+			con.clear();
+			
 			//Creating the Array and Variables
 			int intP1Wins = 0;
 			int intP2Wins = 0;
@@ -66,6 +68,7 @@ public class CPTKyle{
 			int intPlayerTurn = 1;
 			
 			while(blnWon == false){
+				con.clear();
 				//Make and print board
 				con.println("Game Start!");
 				con.println("   1  2  3  4  5  6  7");
@@ -90,21 +93,35 @@ public class CPTKyle{
 					strPlayerName = strNameP2;
 					
 				}
-				con.println(strPlayerName + "choose a column.");
+				con.print(strPlayerName + " choose a column ");
 				
 				int intChosenColumn;
 				boolean blnvalidColumn = false;
 			
 				while(blnvalidColumn == false){
 					intChosenColumn = con.readInt();
+					if(intChosenColumn >= 0 && intChosenColumn < intcolumns){
+						if(intBoard[0][intChosenColumn] == 0){
+							blnvalidColumn = true;
+							
+							boolean blnDroppedPiece = false;
+							for(int introw = introws - 1; blnDroppedPiece == false && introw >= 0; introw--){
+								if(intBoard[introw][intChosenColumn] == 0){
+									intBoard[introw][intChosenColumn] = intcurrentplayer;
+									blnDroppedPiece = true;
+									}
+								}
+							}else{
+								con.println("Column is full, choose another one");
+						}
+					}else{
+						con.println("Invalid, please choose a number from 1 to 6");
+					}
 				}
-				
-				
-			}
 			
-                //blnPlayAgain = false;
+                
+			}
 		}
-
 			
 		}
 	}
