@@ -4,7 +4,7 @@ import java.awt.image.*;
 
 public class CPTKyle{
 	public static void main(String[] args){
-		Console con = new Console(1280,720);
+		Console con = new Console("Connect 4", 1280,720);
 		
 		//Background Image
 		BufferedImage imgconnectfour = con.loadImage("connectfour.jpg");
@@ -26,7 +26,7 @@ public class CPTKyle{
 		
 		//If statment 
 		
-		if(strChoice.equals("p"));{
+		if(strChoice.equalsIgnoreCase("p")){
 			
 			//Name Variables
 			String strNameP1;
@@ -45,24 +45,24 @@ public class CPTKyle{
 			//Creating the Array and Variables
 			int intP1Wins = 0;
 			int intP2Wins = 0;
-			int introws = 6;
-			int intcolumns = 7;
+			int intRows = 6;
+			int intColumns = 7;
 			int intBoard[][];
-			intBoard = new int[introws][intcolumns];
+			intBoard = new int[intRows][intColumns];
 			
 			//Reset game board
 			boolean blnPlayAgain = true;
 			
 			while(blnPlayAgain){
-				for(int introw = 0; introw < introws; introw++){
-					for(int intcolumn = 0; intcolumn < intcolumns; intcolumn++){
-						intBoard[introw][intcolumn] = 0;
+				for(int intRow = 0; intRow < intRows; intRow++){
+					for(int intColumn = 0; intColumn < intColumns; intColumn++){
+						intBoard[intRow][intColumn] = 0;
 					}	
 				}
 			
 			//Set boolean variable for a win to false
 			boolean blnWon = false;
-			int intcurrentplayer = 1;
+			int intCurrentPlayer = 1;
 			
 			//Player Turn
 			int intPlayerTurn = 1;
@@ -72,13 +72,13 @@ public class CPTKyle{
 				//Make and print board
 				con.println("Game Start!");
 				con.println("   1  2  3  4  5  6  7");
-				for(int introw = 0; introw < introws; introw++){
-					con.print((introw+1) + " ");
-					for(int intcolumn = 0; intcolumn < intcolumns; intcolumn++){
-						if(intBoard[introw][intcolumn] == 0){
+				for(int intRow = 0; intRow < intRows; intRow++){
+					con.print((intRow+1) + " ");
+					for(int intColumn = 0; intColumn < intColumns; intColumn++){
+						if(intBoard[intRow][intColumn] == 0){
 							con.print("[ ]");	
 						}else{
-							con.print("[" + intBoard[introw][intcolumn] + "]");
+							con.print("[" + intBoard[intRow][intColumn] + "]");
 						}
 					}
 					con.println();
@@ -87,7 +87,7 @@ public class CPTKyle{
 				//Asks Player which column their piece goes into
 				String strPlayerName;
 				
-				if(intcurrentplayer == 1){
+				if(intCurrentPlayer == 1){
 					strPlayerName = strNameP1;
 				}else{
 					strPlayerName = strNameP2;
@@ -96,21 +96,24 @@ public class CPTKyle{
 				con.print(strPlayerName + " choose a column ");
 				
 				int intChosenColumn;
-				boolean blnvalidColumn = false;
+				boolean blnValidColumn = false;
 			
-				while(blnvalidColumn == false){
+				while(blnValidColumn == false){
 					intChosenColumn = con.readInt();
-					if(intChosenColumn >= 0 && intChosenColumn < intcolumns){
+					if(intChosenColumn >= 0 && intChosenColumn < intColumns){
 						if(intBoard[0][intChosenColumn] == 0){
-							blnvalidColumn = true;
+							blnValidColumn = true;
 							
 							boolean blnDroppedPiece = false;
-							for(int introw = introws - 1; blnDroppedPiece == false && introw >= 0; introw--){
-								if(intBoard[introw][intChosenColumn] == 0){
-									intBoard[introw][intChosenColumn] = intcurrentplayer;
+							int intRow = intRows - 1; 
+							while(blnDroppedPiece == false && intRow >= 0){
+								if(intBoard[intRow][intChosenColumn] == 0){
+									intBoard[intRow][intChosenColumn] = intCurrentPlayer;
 									blnDroppedPiece = true;
-									}
+								}else{
+									intRow--;
 								}
+							}
 							}else{
 								con.println("Column is full, choose another one");
 						}
@@ -119,10 +122,45 @@ public class CPTKyle{
 					}
 				}
 			
-                
+               //Check for a win, four in a row
+               boolean blnWin = false;
+               for(int intRow = 0; intRow < intRows; intRow++){
+				   for(int intColumn = 0; intColumn < intColumns; intColumn++){
+					  
+					   //Horizontal Check
+					   if(intColumn + 3 < intColumns && intBoard[intRow][intColumn] == intCurrentPlayer && intBoard[intRow][intColumn + 1] == intCurrentPlayer &&
+						  intBoard[intRow][intColumn + 2] == intCurrentPlayer && intBoard[intRow][intColumn + 3] == intCurrentPlayer){
+							  blnWin = true;
+						}
+						
+						//Vertical Check
+						if(intRow + 3 < intRows && intBoard[intRow][intColumn] == intCurrentPlayer && intBoard[intRow + 1][intColumn] == intCurrentPlayer &&
+						   intBoard[intRow + 2][intColumn] == intCurrentPlayer &&  intBoard[intRow + 3][intColumn] == intCurrentPlayer){
+							   blnWin = true;
+						}
+						
+						//Diagonal Check - Bottom Left to Top Right
+						if(intRow + 3 < intRow && intColumn + 3 < intColumns && intBoard[intRow][intColumn] == intCurrentPlayer && intBoard[intRow + 1][intColumn + 1] == intCurrentPlayer &&
+						   intBoard[intRow + 2][intColumn + 2] == intCurrentPlayer &&  intBoard[intRow + 3][intColumn + 3] == intCurrentPlayer){
+							   blnWin = true;
+						   }
+						//Diagonal Check - Top Left to Bottom Right
+						if(intRow - 3 >= 0 && intColumn + 3 < intColumns && intBoard[intRow][intColumn] == intCurrentPlayer && intBoard[intRow - 1][intColumn - 1] == intCurrentPlayer &&
+						   intBoard[intRow - 2][intColumn - 2] == intCurrentPlayer &&  intBoard[intRow - 3][intColumn - 3] == intCurrentPlayer){
+							   blnWin = true;
+							}
+						}
+					}
+						
+				}
 			}
-		}
-			
+               
+               
+               
+                
 		}
 	}
+			
 }
+	
+
