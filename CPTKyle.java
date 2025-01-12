@@ -83,7 +83,7 @@ public class CPTKyle{
 					}
 					con.println();
 				}
-				//blnWon = true; 
+				
 				//Asks Player which column their piece goes into
 				String strPlayerName;
 				
@@ -93,25 +93,27 @@ public class CPTKyle{
 					strPlayerName = strNameP2;
 					
 				}
-				con.print(strPlayerName + " choose a column ");
-				
-				int intChosenColumn;
-				boolean blnValidColumn = false;
 			
+				
+				int intChosenColumn = -1;
+				boolean blnValidColumn = false;
+				
+				//Inserting Piece into Column
 				while(blnValidColumn == false){
+					con.print(strPlayerName + " choose a column ");
 					intChosenColumn = con.readInt();
-					if(intChosenColumn >= 0 && intChosenColumn < intColumns){
-						if(intBoard[0][intChosenColumn] == 0){
-							blnValidColumn = true;
+					
+					if(intChosenColumn >= 1 && intChosenColumn <= intColumns){
+							intChosenColumn--;
+							
+							if(intBoard[0][intChosenColumn] == 0){
+									blnValidColumn = true;
 							
 							boolean blnDroppedPiece = false;
-							int intRow = intRows - 1; 
-							while(blnDroppedPiece == false && intRow >= 0){
+							for(int intRow = intRows - 1; intRow >= 0 && blnDroppedPiece == false; intRow--){
 								if(intBoard[intRow][intChosenColumn] == 0){
 									intBoard[intRow][intChosenColumn] = intCurrentPlayer;
 									blnDroppedPiece = true;
-								}else{
-									intRow--;
 								}
 							}
 							}else{
@@ -124,8 +126,9 @@ public class CPTKyle{
 			
                //Check for a win, four in a row
                boolean blnWin = false;
+               
                for(int intRow = 0; intRow < intRows; intRow++){
-				   for(int intColumn = 0; intColumn < intColumns; intColumn++){
+				  for(int intColumn = 0; intColumn < intColumns; intColumn++){
 					  
 					   //Horizontal Check
 					   if(intColumn + 3 < intColumns && intBoard[intRow][intColumn] == intCurrentPlayer && intBoard[intRow][intColumn + 1] == intCurrentPlayer &&
@@ -140,23 +143,84 @@ public class CPTKyle{
 						}
 						
 						//Diagonal Check - Bottom Left to Top Right
-						if(intRow + 3 < intRow && intColumn + 3 < intColumns && intBoard[intRow][intColumn] == intCurrentPlayer && intBoard[intRow + 1][intColumn + 1] == intCurrentPlayer &&
-						   intBoard[intRow + 2][intColumn + 2] == intCurrentPlayer &&  intBoard[intRow + 3][intColumn + 3] == intCurrentPlayer){
+						if(intRow + 3 < intRows && intColumn + 3 < intColumns && 
+						   intBoard[intRow][intColumn] == intCurrentPlayer && 
+						   intBoard[intRow + 1][intColumn + 1] == intCurrentPlayer &&
+						   intBoard[intRow + 2][intColumn + 2] == intCurrentPlayer &&  
+						   intBoard[intRow + 3][intColumn + 3] == intCurrentPlayer){
 							   blnWin = true;
 						   }
 						//Diagonal Check - Top Left to Bottom Right
-						if(intRow - 3 >= 0 && intColumn + 3 < intColumns && intBoard[intRow][intColumn] == intCurrentPlayer && intBoard[intRow - 1][intColumn - 1] == intCurrentPlayer &&
-						   intBoard[intRow - 2][intColumn - 2] == intCurrentPlayer &&  intBoard[intRow - 3][intColumn - 3] == intCurrentPlayer){
+						if(intRow - 3 >= 0 && intColumn + 3 < intColumns && 
+						   intBoard[intRow][intColumn] == intCurrentPlayer && 
+						   intBoard[intRow - 1][intColumn + 1] == intCurrentPlayer &&
+						   intBoard[intRow - 2][intColumn + 2] == intCurrentPlayer &&  
+						   intBoard[intRow - 3][intColumn + 3] == intCurrentPlayer){
 							   blnWin = true;
 							}
 						}
 					}
+					
+					//You win statement
+					if(blnWin){
+						con.println(strPlayerName + " wins!!");
+						//Counting Player Wins
+						if(intCurrentPlayer == 1){
+								intP1Wins++;
+						}else{
+								intP2Wins++;
+							
+						}
+					
+						blnWon = true;
 						
-				}
+						String strPlayAgain;
+						con.println("Do you want to play again (y/n)?");
+						strPlayAgain = con.readLine();
+						if(strPlayAgain.equalsIgnoreCase("y")){
+							blnPlayAgain = true;
+						}else{
+							blnPlayAgain = false;
+					}
+					
+					}else{
+						//Checking for a tie - game board is full
+						boolean blnFull = true;
+						for(int intColumn = 0; intColumn < intColumns; intColumn++){
+							if(intBoard[0][intColumn] == 0)
+								blnFull = false;
+						}
+						
+						if(blnFull){
+							con.println("It's a tie!");
+							blnWon = true;
+							//Game is not actually won, just making the program reset
+							
+						String strPlayAgain;
+						con.println("Do you want to play again (y/n)?");
+						strPlayAgain = con.readLine();
+						if(strPlayAgain.equalsIgnoreCase("y")){
+							blnPlayAgain = true;
+						}else{
+							blnPlayAgain = false;
+						}
+							
+						}else{
+							//Switching player after turn is finished and computer checks for win
+							if(intCurrentPlayer == 1){
+								intCurrentPlayer = 2;
+							}else{
+								intCurrentPlayer = 1;
+							}
+						}
+					}
+					
 			}
+				
+				
                
                
-               
+           } 
                 
 		}
 	}
