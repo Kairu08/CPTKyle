@@ -123,6 +123,20 @@ public class CPTKyle{
 						con.println("Invalid, please choose a number from 1 to 6");
 					}
 				}
+				
+					con.clear();
+					con.println("   1  2  3  4  5  6  7");
+					for(int intRow = 0; intRow < intRows; intRow++){
+						con.print((intRow + 1) + " ");
+						for(int intColumn = 0; intColumn < intColumns; intColumn++){
+							if(intBoard[intRow][intColumn] == 0){
+								con.print("[ ]");
+							} else {
+								con.print("[" + intBoard[intRow][intColumn] + "]");
+							}
+						}
+							con.println();
+					}
 			
                //Check for a win, four in a row
                boolean blnWin = false;
@@ -214,17 +228,14 @@ public class CPTKyle{
 							}
 						}
 					}
-					
-			}
+				}
 				
 				
                
                
-           } 
-                
+           }      
 		}
-	}
-			
+	}			
 }
 	
 
