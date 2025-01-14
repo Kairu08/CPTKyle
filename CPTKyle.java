@@ -73,11 +73,14 @@ public class CPTKyle{
 				con.println("Game Start!");
 				con.println("   1  2  3  4  5  6  7");
 				for(int intRow = 0; intRow < intRows; intRow++){
+					con.setTextColor(Color.BLACK);
 					con.print((intRow+1) + " ");
 					for(int intColumn = 0; intColumn < intColumns; intColumn++){
 						if(intBoard[intRow][intColumn] == 0){
+							con.setTextColor(Color.BLACK);
 							con.print("[ ]");	
 						}else{
+							con.setTextColor(Color.BLACK);
 							con.print("[" + intBoard[intRow][intColumn] + "]");
 						}
 					}
@@ -195,6 +198,7 @@ public class CPTKyle{
 							blnPlayAgain = true;
 						}else{
 							blnPlayAgain = false;
+							con.closeConsole();
 					}
 					
 					}else{
@@ -217,6 +221,7 @@ public class CPTKyle{
 							blnPlayAgain = true;
 						}else{
 							blnPlayAgain = false;
+							con.closeConsole();
 						}
 							
 						}else{
