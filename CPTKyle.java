@@ -12,6 +12,10 @@ public class CPTKyle{
 		
 		String strChoice;
 		
+		//Makes an Array to show highscores 
+		String[][] strScores = new String[2][999]; 
+		int intWins = 0;
+		
 		//Main Menu
 		con.println("Welcome to Connect 4");
 		con.println("Play game (p)");
@@ -195,10 +199,18 @@ public class CPTKyle{
 						con.println("Do you want to play again (y/n)?");
 						strPlayAgain = con.readLine();
 						if(strPlayAgain.equalsIgnoreCase("y")){
+							System.out.println("suisei");
 							blnPlayAgain = true;
 						}else{
 							blnPlayAgain = false;
-							con.closeConsole();
+							
+							//Write Score to another file
+							TextOutputFile HighScores = new TextOutputFile("highscores.txt", true);
+							HighScores.println(strNameP1 + "|" + intP1Wins);
+							HighScores.println(strNameP2 + "|" + intP2Wins);
+							HighScores.close();
+							
+							con.closeConsole();	
 					}
 					
 					}else{
@@ -218,9 +230,25 @@ public class CPTKyle{
 						con.println("Do you want to play again (y/n)?");
 						strPlayAgain = con.readLine();
 						if(strPlayAgain.equalsIgnoreCase("y")){
+							System.out.println("suisei");
 							blnPlayAgain = true;
 						}else{
 							blnPlayAgain = false;
+							
+							//Write Score to another file
+							TextOutputFile HighScores = new TextOutputFile("highscores.txt", true);
+							HighScores.println(strNameP1 + "|" + intP1Wins);
+							HighScores.println(strNameP2 + "|" + intP2Wins);
+							
+							strScores[intWins][0] = strNameP1;
+							strScores[intWins][1] = intP1Wins + "";
+							
+							intWins += 1;
+							strScores[intWins][0] = strNameP2;
+							strScores[intWins][1] = intP2Wins + "";
+							
+							HighScores.close();
+							
 							con.closeConsole();
 						}
 							
@@ -235,11 +263,61 @@ public class CPTKyle{
 					}
 				}
 				
+				TextInputFile HighScoresInput = new TextInputFile("highscores.txt");
+				int intIndex = 0;
+	
+					//Put the name and score into the 2D array
+					while(HighScoresInput.eof() == false){
+						String strLine = HighScoresInput.readLine();
+						strScores[intIndex][0] = strLine;
+						intIndex++;
+					}
+					HighScoresInput.close();
+					
+					//Bubble sorting
+					int intCount;
+					String strTempName;
+					int intTempScore;
+					int intRow;
+					int intRow2;
+					for(intRow2 = 0; intRow2 < intIndex - 1; intRow2++){
+						for(intRow = 0; intRow < intIndex - 1 - intRow2; intRow++){
+							
+							//Making sure that both scores are not null before I compare the values
+							if(strScores[intRow][1] !=null && strScores[intRow+1][1] !=null){
+								int intScore1 = Integer.parseInt(strScores[intRow][1]);
+								int intScore2 = Integer.parseInt(strScores[intRow+1][1]);
+								if(intScore1 > intScore2){
+									
+									//Swapping Names
+									strTempName = strScores[intRow][0];
+									strScores[intRow][0] = strScores[intRow+1][0];
+									strScores[intRow][1] = strScores[intRow+1][1];
+								
+									//Swap Scores
+									intTempScore = Integer.parseInt(strScores[intRow][1]);
+									strScores[intRow+1][0] = strTempName;
+									strScores[intRow+1][1] = intTempScore + "";
+								}
+							}
+						}
+					}
+					
+					
+				
+				
+		
 				
                
                
            }      
 		}
+		
+		
+		
+		
+		
+		
 	}			
 }
 	
