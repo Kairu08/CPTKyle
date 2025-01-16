@@ -12,14 +12,21 @@ public class CPTKyle{
 		
 		String strChoice;
 		
+		//Bubble Sorting variables
+		int intCount;
+		String strTempName;
+		int intTempScore;
+		int intIndex = 0;
+		
 		//Makes an Array to show highscores 
-		String[][] strScores = new String[2][999]; 
 		int intWins = 0;
+		int intRow = 0;
+		int intRow2 = 0;
 		
 		//Main Menu
 		con.println("Welcome to Connect 4");
 		con.println("Play game (p)");
-		con.println("View High Scores (s)");
+		con.println("View High Scores (v)");
 		con.println("Themes (t)");
 		con.println("Help (h)");
 		con.println("Quit (q)");
@@ -58,7 +65,7 @@ public class CPTKyle{
 			boolean blnPlayAgain = true;
 			
 			while(blnPlayAgain){
-				for(int intRow = 0; intRow < intRows; intRow++){
+				for(intRow = 0; intRow < intRows; intRow++){
 					for(int intColumn = 0; intColumn < intColumns; intColumn++){
 						intBoard[intRow][intColumn] = 0;
 					}	
@@ -76,7 +83,7 @@ public class CPTKyle{
 				//Make and print board
 				con.println("Game Start!");
 				con.println("   1  2  3  4  5  6  7");
-				for(int intRow = 0; intRow < intRows; intRow++){
+				for(intRow = 0; intRow < intRows; intRow++){
 					con.setTextColor(Color.BLACK);
 					con.print((intRow+1) + " ");
 					for(int intColumn = 0; intColumn < intColumns; intColumn++){
@@ -117,7 +124,7 @@ public class CPTKyle{
 									blnValidColumn = true;
 							
 							boolean blnDroppedPiece = false;
-							for(int intRow = intRows - 1; intRow >= 0 && blnDroppedPiece == false; intRow--){
+							for(intRow = intRows - 1; intRow >= 0 && blnDroppedPiece == false; intRow--){
 								if(intBoard[intRow][intChosenColumn] == 0){
 									intBoard[intRow][intChosenColumn] = intCurrentPlayer;
 									blnDroppedPiece = true;
@@ -133,7 +140,7 @@ public class CPTKyle{
 				
 					con.clear();
 					con.println("   1  2  3  4  5  6  7");
-					for(int intRow = 0; intRow < intRows; intRow++){
+					for(intRow = 0; intRow < intRows; intRow++){
 						con.print((intRow + 1) + " ");
 						for(int intColumn = 0; intColumn < intColumns; intColumn++){
 							if(intBoard[intRow][intColumn] == 0){
@@ -148,7 +155,7 @@ public class CPTKyle{
                //Check for a win, four in a row
                boolean blnWin = false;
                
-               for(int intRow = 0; intRow < intRows; intRow++){
+               for(intRow = 0; intRow < intRows; intRow++){
 				  for(int intColumn = 0; intColumn < intColumns; intColumn++){
 					  
 					   //Horizontal Check
@@ -199,15 +206,16 @@ public class CPTKyle{
 						con.println("Do you want to play again (y/n)?");
 						strPlayAgain = con.readLine();
 						if(strPlayAgain.equalsIgnoreCase("y")){
-							System.out.println("suisei");
 							blnPlayAgain = true;
-						}else{
+						}else if(strPlayAgain.equalsIgnoreCase("n")){
 							blnPlayAgain = false;
 							
 							//Write Score to another file
 							TextOutputFile HighScores = new TextOutputFile("highscores.txt", true);
-							HighScores.println(strNameP1 + "|" + intP1Wins);
-							HighScores.println(strNameP2 + "|" + intP2Wins);
+							HighScores.println(strNameP1);
+							HighScores.println(intP1Wins);
+							HighScores.println(strNameP2);
+							HighScores.println(intP2Wins);
 							HighScores.close();
 							
 							con.closeConsole();	
@@ -229,24 +237,16 @@ public class CPTKyle{
 						String strPlayAgain;
 						con.println("Do you want to play again (y/n)?");
 						strPlayAgain = con.readLine();
-						if(strPlayAgain.equalsIgnoreCase("y")){
-							System.out.println("suisei");
-							blnPlayAgain = true;
-						}else{
-							blnPlayAgain = false;
+							if(strPlayAgain.equalsIgnoreCase("y")){
+								System.out.println("suisei");
+								blnPlayAgain = true;
+							}else{
+								blnPlayAgain = false;
 							
 							//Write Score to another file
 							TextOutputFile HighScores = new TextOutputFile("highscores.txt", true);
 							HighScores.println(strNameP1 + "|" + intP1Wins);
 							HighScores.println(strNameP2 + "|" + intP2Wins);
-							
-							strScores[intWins][0] = strNameP1;
-							strScores[intWins][1] = intP1Wins + "";
-							
-							intWins += 1;
-							strScores[intWins][0] = strNameP2;
-							strScores[intWins][1] = intP2Wins + "";
-							
 							HighScores.close();
 							
 							con.closeConsole();
@@ -264,59 +264,59 @@ public class CPTKyle{
 				}
 				
 				TextInputFile HighScoresInput = new TextInputFile("highscores.txt");
-				int intIndex = 0;
-	
-					//Put the name and score into the 2D array
-					while(HighScoresInput.eof() == false){
-						String strLine = HighScoresInput.readLine();
-						strScores[intIndex][0] = strLine;
+				String[][] strScoresTotal = new String[999][2];
+				System.out.println("TESTING TESTING 1 2 3");
+				
+				//Read it
+				while(HighScoresInput.eof() == false){
+					String strName = HighScoresInput.readLine();
+					String strScore = HighScoresInput.readLine();
+					
+					if(strName !=null && strScore !=null){
+						strScoresTotal[intIndex][0] = strName;
+						strScoresTotal[intIndex][1] = strScore;
 						intIndex++;
 					}
-					HighScoresInput.close();
+				}
+				HighScoresInput.close();
+		
 					
-					//Bubble sorting
-					int intCount;
-					String strTempName;
-					int intTempScore;
-					int intRow;
-					int intRow2;
-					for(intRow2 = 0; intRow2 < intIndex - 1; intRow2++){
-						for(intRow = 0; intRow < intIndex - 1 - intRow2; intRow++){
-							
-							//Making sure that both scores are not null before I compare the values
-							if(strScores[intRow][1] !=null && strScores[intRow+1][1] !=null){
-								int intScore1 = Integer.parseInt(strScores[intRow][1]);
-								int intScore2 = Integer.parseInt(strScores[intRow+1][1]);
-								if(intScore1 > intScore2){
-									
-									//Swapping Names
-									strTempName = strScores[intRow][0];
-									strScores[intRow][0] = strScores[intRow+1][0];
-									strScores[intRow][1] = strScores[intRow+1][1];
-								
-									//Swap Scores
-									intTempScore = Integer.parseInt(strScores[intRow][1]);
-									strScores[intRow+1][0] = strTempName;
-									strScores[intRow+1][1] = intTempScore + "";
-								}
+				//Bubble sorting
+				for(intRow2 = 0; intRow2 < intIndex + 1; intRow2++){
+					for(intRow = 0; intRow < intIndex + 1 - intRow2; intRow++){
+						//Making sure that both scores are not null before comparing the values
+						if(strScoresTotal[intRow][1] != null && strScoresTotal[intRow+1][1] != null){
+							int intScore1 = Integer.parseInt(strScoresTotal[intRow][1]);
+							int intScore2 = Integer.parseInt(strScoresTotal[intRow+1][1]);
+							System.out.println("Parsed");
+							if(intScore1 < intScore2){
+								//Swapping Names
+								strTempName = strScoresTotal[intRow][0];
+								strScoresTotal[intRow][0] = strScoresTotal[intRow+1][0];
+								strScoresTotal[intRow + 1][0] = strTempName;
+										
+								//Swap Scores
+								String strTempScore = strScoresTotal[intRow][1];
+								strScoresTotal[intRow][1] = strScoresTotal[intRow +1][1];
+								strScoresTotal[intRow + 1][1] = strTempScore;
+								System.out.println("Bubble");
 							}
+						}else{
+							System.out.println("NULLED");
 						}
 					}
+				}
+				con.sleep(5000);
+				con.clear();
+				for(intRow = 0; intRow < intIndex; intRow++){
+					con.println(strScoresTotal[intRow][0] + " | " + strScoresTotal[intRow][1]);
+				}
+				con.sleep(5000);
 					
+						
 					
-				
-				
-		
-				
-               
-               
+				}
            }      
-		}
-		
-		
-		
-		
-		
 		
 	}			
 }
