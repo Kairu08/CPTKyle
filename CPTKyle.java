@@ -17,12 +17,14 @@ public class CPTKyle{
 		String strTempName;
 		int intTempScore;
 		int intIndex = 0;
+		boolean blnMainMenu = true;
 		
 		//Makes an Array to show highscores 
 		int intWins = 0;
 		int intRow = 0;
 		int intRow2 = 0;
 		
+		while(blnMainMenu == true){
 		//Main Menu
 		con.println("Welcome to Connect 4");
 		con.println("Play game (p)");
@@ -38,6 +40,7 @@ public class CPTKyle{
 		//If statment 
 		
 		if(strChoice.equalsIgnoreCase("p")){
+			blnMainMenu = false;
 			
 			//Name Variables
 			String strNameP1;
@@ -316,8 +319,68 @@ public class CPTKyle{
 						
 					
 				}
-           }      
-		
+			}else if(strChoice.equalsIgnoreCase("v")){
+				blnMainMenu = false;
+				TextInputFile HighScoresOutput = new TextInputFile("highscores.txt");
+				con.clear();
+				
+				String strUser;
+				int intUserScore;
+				
+				while(HighScoresOutput.eof() == false){
+					strUser = HighScoresOutput.readLine();
+					intUserScore = HighScoresOutput.readInt();
+					con.println(strUser);
+					con.println(intUserScore);
+					}
+				String strMain;
+				con.println("Would you like to go back to the main menu?");
+				strMain = con.readLine();
+					if(strMain.equalsIgnoreCase("y")){
+						blnMainMenu = true;
+						break;
+					}else if(strMain.equalsIgnoreCase("n")){
+						blnMainMenu = false;
+					}else{
+						con.println("That is not an option");
+						blnMainMenu = false;
+					}
+						
+					
+					
+			}else if(strChoice.equalsIgnoreCase("t")){
+				con.println("I havent coded this part yet cause im lazy");
+				blnMainMenu = true;
+				break;
+				
+			}else if(strChoice.equalsIgnoreCase("h")){
+				blnMainMenu = false;
+				con.clear();
+				
+				con.println("HOW TO PLAY CONNECT FOUR");
+				con.println("On your turn, drop one of your checkers down ANY of the columns at the top of the grid");
+				con.println("");
+				con.println("Play alternates until one player gets FOUR pieces in a row.");
+				con.println("");
+				con.println("The four in a row can either be horizontal, vertical, or diagonal");
+				con.println("");
+				con.println("Would you like to go back to the main menu?");
+				String strMain = con.readLine();
+					if(strMain.equalsIgnoreCase("y")){
+						blnMainMenu = true;
+						break;
+					}else if(strMain.equalsIgnoreCase("n")){
+						blnMainMenu = false;
+					}else{
+						con.println("That is not an option");
+						blnMainMenu = false;
+					}
+				
+				
+			}else if(strChoice.equalsIgnoreCase("q")){
+				con.closeConsole();
+			}
+		}    
 	}			
 }
 	
