@@ -87,15 +87,17 @@ public class CPTKyle{
 				con.println("Game Start!");
 				con.println("   1  2  3  4  5  6  7");
 				for(intRow = 0; intRow < intRows; intRow++){
-					con.setTextColor(Color.BLACK);
 					con.print((intRow+1) + " ");
 					for(int intColumn = 0; intColumn < intColumns; intColumn++){
 						if(intBoard[intRow][intColumn] == 0){
 							con.setTextColor(Color.BLACK);
 							con.print("[ ]");	
-						}else{
-							con.setTextColor(Color.BLACK);
-							con.print("[" + intBoard[intRow][intColumn] + "]");
+						}else if(intBoard[intRow][intColumn] == 1){
+							con.setTextColor(Color.RED);
+							con.print("[x]");
+						}else if(intBoard[intRow][intColumn] == 2){
+							con.setTextColor(Color.YELLOW);
+							con.print("[o]");
 						}
 					}
 					con.println();
@@ -147,12 +149,17 @@ public class CPTKyle{
 						con.print((intRow + 1) + " ");
 						for(int intColumn = 0; intColumn < intColumns; intColumn++){
 							if(intBoard[intRow][intColumn] == 0){
+								con.setTextColor(Color.BLACK);
 								con.print("[ ]");
-							} else {
-								con.print("[" + intBoard[intRow][intColumn] + "]");
+							} else if(intBoard[intRow][intColumn] == 1){
+								con.setTextColor(Color.RED);
+								con.print("[x]");
+							}else if(intBoard[intRow][intColumn] == 2){
+								con.setTextColor(Color.YELLOW);
+								con.print("[o]");
 							}
 						}
-							con.println();
+						con.println();
 					}
 			
                //Check for a win, four in a row
