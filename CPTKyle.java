@@ -6,18 +6,19 @@ public class CPTKyle{
 	public static void main(String[] args){
 		Console con = new Console("Connect 4", 1280,720);
 		
+		boolean blnMainMenu = true;
+		
 		//Background Image
 		BufferedImage imgconnectfour = con.loadImage("connectfour.jpg");
 		con.drawImage(imgconnectfour,0,0);
 		
-		String strChoice;
+		char chrChoice;
 		
 		//Bubble Sorting variables
 		int intCount;
 		String strTempName;
-		int intTempScore;
+		String strTempScore;
 		int intIndex = 0;
-		boolean blnMainMenu = true;
 		
 		//Makes an Array to show highscores 
 		int intWins = 0;
@@ -25,21 +26,18 @@ public class CPTKyle{
 		int intRow2 = 0;
 		
 		while(blnMainMenu == true){
-		//Main Menu
-		con.println("Welcome to Connect 4");
-		con.println("Play game (p)");
-		con.println("View High Scores (v)");
-		con.println("Themes (t)");
-		con.println("Help (h)");
-		con.println("Quit (q)");
-
-		
-		con.println("What would you like to do?: ");
-		strChoice = con.readLine();
+			//Main Menu
+			con.println("Welcome to Connect 4");
+			con.println("Play game (p)");
+			con.println("View High Scores (v)");
+			con.println("Themes (t)");
+			con.println("Help (h)");
+			con.println("Quit (q)");
+			con.println("What would you like to do?: ");
+			chrChoice = con.readChar();
 		
 		//If statment 
-		
-		if(strChoice.equalsIgnoreCase("p")){
+		if(chrChoice == 'p'){
 			blnMainMenu = false;
 			
 			//Name Variables
@@ -90,7 +88,6 @@ public class CPTKyle{
 					con.print((intRow+1) + " ");
 					for(int intColumn = 0; intColumn < intColumns; intColumn++){
 						if(intBoard[intRow][intColumn] == 0){
-							con.setTextColor(Color.BLACK);
 							con.print("[ ]");	
 						}else if(intBoard[intRow][intColumn] == 1){
 							con.setTextColor(Color.RED);
@@ -102,6 +99,7 @@ public class CPTKyle{
 					}
 					con.println();
 				}
+				
 				
 				//Asks Player which column their piece goes into
 				String strPlayerName;
@@ -143,13 +141,13 @@ public class CPTKyle{
 					}
 				}
 				
+					
 					con.clear();
 					con.println("   1  2  3  4  5  6  7");
 					for(intRow = 0; intRow < intRows; intRow++){
 						con.print((intRow + 1) + " ");
 						for(int intColumn = 0; intColumn < intColumns; intColumn++){
 							if(intBoard[intRow][intColumn] == 0){
-								con.setTextColor(Color.BLACK);
 								con.print("[ ]");
 							} else if(intBoard[intRow][intColumn] == 1){
 								con.setTextColor(Color.RED);
@@ -207,7 +205,6 @@ public class CPTKyle{
 								intP1Wins++;
 						}else{
 								intP2Wins++;
-							
 						}
 					
 						blnWon = true;
@@ -289,45 +286,53 @@ public class CPTKyle{
 					}
 				}
 				HighScoresInput.close();
-		
-					
+				
 				//Bubble sorting
-				for(intRow2 = 0; intRow2 < intIndex + 1; intRow2++){
-					for(intRow = 0; intRow < intIndex + 1 - intRow2; intRow++){
+				for(intRow2 = 0; intRow2 < intIndex - 1; intRow2++){
+					for(intRow = 0; intRow < intIndex - 1 - intRow2; intRow++){
 						//Making sure that both scores are not null before comparing the values
-						if(strScoresTotal[intRow][1] != null && strScoresTotal[intRow+1][1] != null){
+						if(strScoresTotal[intRow] != null && strScoresTotal[intRow+1] != null &&
+							strScoresTotal[intRow][1] != null && strScoresTotal[intRow +1][1] != null){
+							
 							int intScore1 = Integer.parseInt(strScoresTotal[intRow][1]);
 							int intScore2 = Integer.parseInt(strScoresTotal[intRow+1][1]);
+							
 							System.out.println("Parsed");
+							
 							if(intScore1 < intScore2){
-								//Swapping Names
 								strTempName = strScoresTotal[intRow][0];
+								strTempScore = strScoresTotal[intRow][1];
 								strScoresTotal[intRow][0] = strScoresTotal[intRow+1][0];
-								strScoresTotal[intRow + 1][0] = strTempName;
-										
-								//Swap Scores
-								String strTempScore = strScoresTotal[intRow][1];
-								strScoresTotal[intRow][1] = strScoresTotal[intRow +1][1];
-								strScoresTotal[intRow + 1][1] = strTempScore;
-								System.out.println("Bubble");
+								strScoresTotal[intRow][1] = strScoresTotal[intRow+1][1];
+								strScoresTotal[intRow+1][0] = strTempName;
+								strScoresTotal[intRow+1][1] = strTempScore;
 							}
-						}else{
-							System.out.println("NULLED");
 						}
 					}
 				}
-				con.sleep(5000);
+				
+				TextOutputFile FinalHighScores = new TextOutputFile("highscores.txt", false);
+				for(intRow= 0; intRow < intIndex; intRow++){
+					if(strScoresTotal[intRow][0] != null && strScoresTotal[intRow][1] != null){
+						FinalHighScores.println(strScoresTotal[intRow][0]);
+						FinalHighScores.println(strScoresTotal[intRow][1]);
+					}
+				}
+				FinalHighScores.close();
+				
 				con.clear();
+				con.println("High Scores:");
 				for(intRow = 0; intRow < intIndex; intRow++){
-					con.println(strScoresTotal[intRow][0] + " | " + strScoresTotal[intRow][1]);
+					if(strScoresTotal[intRow][0] != null && strScoresTotal[intRow][1] != null){
+						con.println(strScoresTotal[intRow][0] + " | " + strScoresTotal[intRow][1]);
+					}
 				}
-				con.sleep(5000);
-					
 						
-					
-				}
-			}else if(strChoice.equalsIgnoreCase("v")){
+				}//dont delete
+		
+			}else if(chrChoice == 'v'){
 				blnMainMenu = false;
+				con.clear();
 				TextInputFile HighScoresOutput = new TextInputFile("highscores.txt");
 				con.clear();
 				
@@ -339,56 +344,63 @@ public class CPTKyle{
 					intUserScore = HighScoresOutput.readInt();
 					con.println(strUser);
 					con.println(intUserScore);
-					}
-				String strMain;
-				con.println("Would you like to go back to the main menu?");
-				strMain = con.readLine();
-					if(strMain.equalsIgnoreCase("y")){
-						blnMainMenu = true;
-						break;
-					}else if(strMain.equalsIgnoreCase("n")){
-						blnMainMenu = false;
-					}else{
-						con.println("That is not an option");
-						blnMainMenu = false;
-					}
-						
-					
-					
-			}else if(strChoice.equalsIgnoreCase("t")){
-				con.println("I havent coded this part yet cause im lazy");
-				blnMainMenu = true;
-				break;
+				}
 				
-			}else if(strChoice.equalsIgnoreCase("h")){
+				con.println("Press the y key when you want to go back to the main menu");
+				
+				if(con.getChar() == 'y'){
+					blnMainMenu = true;
+					con.clear();
+					continue;
+				}
+				HighScoresOutput.close();
+				
+			}else if(chrChoice == 't'){
+				blnMainMenu = true;
+				con.clear();
+				
+				int intThemeChoice;
+				
+				con.println("Here are the avaliable Themes:");
+				con.println("Default (1)");
+				con.println("Christmas (2)");
+				con.println("Which theme would you like to use? (1/2)");
+				intThemeChoice = con.readInt();
+				
+				
+				
+				
+				
+			}else if(chrChoice == 'h'){
 				blnMainMenu = false;
 				con.clear();
 				
 				con.println("HOW TO PLAY CONNECT FOUR");
+				con.println("");
 				con.println("On your turn, drop one of your checkers down ANY of the columns at the top of the grid");
 				con.println("");
 				con.println("Play alternates until one player gets FOUR pieces in a row.");
 				con.println("");
 				con.println("The four in a row can either be horizontal, vertical, or diagonal");
 				con.println("");
-				con.println("Would you like to go back to the main menu?");
-				String strMain = con.readLine();
-					if(strMain.equalsIgnoreCase("y")){
-						blnMainMenu = true;
-						break;
-					}else if(strMain.equalsIgnoreCase("n")){
-						blnMainMenu = false;
-					}else{
-						con.println("That is not an option");
-						blnMainMenu = false;
-					}
+				con.println("Would you like to go back to the main menu? (y)");
 				
-				
-			}else if(strChoice.equalsIgnoreCase("q")){
+				while(con.getChar() == 'y'){
+					blnMainMenu = true;
+					con.clear();
+					break;
+				}	
+			}
+			if(chrChoice != 'p' && chrChoice != 'v' && chrChoice != 't' && chrChoice != 'h' && chrChoice != 'q'){
+				con.println("That letter is not an option");
+				con.println("Please pick a letter represented by the menu");
+				con.sleep(1000);
+				con.clear();
+			}
+			
+			if(chrChoice == 'q'){
 				con.closeConsole();
 			}
 		}    
 	}			
 }
-	
-
