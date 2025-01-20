@@ -25,6 +25,16 @@ public class CPTKyle{
 		int intRow = 0;
 		int intRow2 = 0;
 		
+		int intTheme = 0;
+		// ask user for the theme and change the intTheme to that
+		// Change the colours when you set the colours
+		
+		
+		
+		//Set boolean variable for a win to false
+		boolean blnWon = false;
+		int intCurrentPlayer = 1;
+		
 		while(blnMainMenu == true){
 			//Main Menu
 			con.println("Welcome to Connect 4");
@@ -38,6 +48,8 @@ public class CPTKyle{
 		
 		//If statment 
 		if(chrChoice == 'p'){
+			
+			
 			blnMainMenu = false;
 			
 			//Name Variables
@@ -52,7 +64,10 @@ public class CPTKyle{
 			con.print("What is P2's name: ");
 			strNameP2 = con.readLine();
 			
+			con.setTextColor(Color.RED);
+			
 			con.clear();
+			
 			
 			//Creating the Array and Variables
 			int intP1Wins = 0;
@@ -72,33 +87,27 @@ public class CPTKyle{
 					}	
 				}
 			
-			//Set boolean variable for a win to false
-			boolean blnWon = false;
-			int intCurrentPlayer = 1;
-			
-			//Player Turn
-			int intPlayerTurn = 1;
-			
-			while(blnWon == false){
-				con.clear();
-				//Make and print board
-				con.println("Game Start!");
-				con.println("   1  2  3  4  5  6  7");
-				for(intRow = 0; intRow < intRows; intRow++){
-					con.print((intRow+1) + " ");
-					for(int intColumn = 0; intColumn < intColumns; intColumn++){
-						if(intBoard[intRow][intColumn] == 0){
-							con.print("[ ]");	
-						}else if(intBoard[intRow][intColumn] == 1){
-							con.setTextColor(Color.RED);
-							con.print("[x]");
-						}else if(intBoard[intRow][intColumn] == 2){
-							con.setTextColor(Color.YELLOW);
-							con.print("[o]");
+				//Player Turn
+				int intPlayerTurn = 1;
+				
+				while(blnWon == false){
+					con.clear();
+					//Make and print board
+					con.println("Game Start!");
+					con.println("   1  2  3  4  5  6  7");
+					for(intRow = 0; intRow < intRows; intRow++){
+						con.print((intRow+1) + " ");
+						for(int intColumn = 0; intColumn < intColumns; intColumn++){
+							if(intBoard[intRow][intColumn] == 0){
+								con.print("[ ]");	
+							}else if(intBoard[intRow][intColumn] == 1){
+								con.print("[x]");
+							}else if(intBoard[intRow][intColumn] == 2){
+								con.print("[o]");
+							}
 						}
+						con.println();
 					}
-					con.println();
-				}
 				
 				
 				//Asks Player which column their piece goes into
@@ -108,7 +117,6 @@ public class CPTKyle{
 					strPlayerName = strNameP1;
 				}else{
 					strPlayerName = strNameP2;
-					
 				}
 			
 				
@@ -142,31 +150,29 @@ public class CPTKyle{
 				}
 				
 					
-					con.clear();
-					con.println("   1  2  3  4  5  6  7");
-					for(intRow = 0; intRow < intRows; intRow++){
-						con.print((intRow + 1) + " ");
-						for(int intColumn = 0; intColumn < intColumns; intColumn++){
-							if(intBoard[intRow][intColumn] == 0){
-								con.print("[ ]");
-							} else if(intBoard[intRow][intColumn] == 1){
-								con.setTextColor(Color.RED);
-								con.print("[x]");
-							}else if(intBoard[intRow][intColumn] == 2){
-								con.setTextColor(Color.YELLOW);
-								con.print("[o]");
-							}
+				con.clear();
+				con.println("   1  2  3  4  5  6  7");
+				for(intRow = 0; intRow < intRows; intRow++){
+					con.print((intRow + 1) + " ");
+					for(int intColumn = 0; intColumn < intColumns; intColumn++){
+						if(intBoard[intRow][intColumn] == 0){
+							con.print("[ ]");
+						} else if(intBoard[intRow][intColumn] == 1){
+							con.print("[x]");
+						}else if(intBoard[intRow][intColumn] == 2){
+							con.print("[o]");
 						}
-						con.println();
 					}
+					con.println();
+				}
 			
                //Check for a win, four in a row
                boolean blnWin = false;
                
                for(intRow = 0; intRow < intRows; intRow++){
-				  for(int intColumn = 0; intColumn < intColumns; intColumn++){
+				   for(int intColumn = 0; intColumn < intColumns; intColumn++){
 					  
-					   //Horizontal Check
+					//Horizontal Check
 					   if(intColumn + 3 < intColumns && intBoard[intRow][intColumn] == intCurrentPlayer && intBoard[intRow][intColumn + 1] == intCurrentPlayer &&
 						  intBoard[intRow][intColumn + 2] == intCurrentPlayer && intBoard[intRow][intColumn + 3] == intCurrentPlayer){
 							  blnWin = true;
@@ -214,6 +220,7 @@ public class CPTKyle{
 						strPlayAgain = con.readLine();
 						if(strPlayAgain.equalsIgnoreCase("y")){
 							blnPlayAgain = true;
+							System.out.println("Suisei");
 						}else if(strPlayAgain.equalsIgnoreCase("n")){
 							blnPlayAgain = false;
 							
@@ -240,24 +247,25 @@ public class CPTKyle{
 							con.println("It's a tie!");
 							blnWon = true;
 							//Game is not actually won, just making the program reset
-							
-						String strPlayAgain;
-						con.println("Do you want to play again (y/n)?");
-						strPlayAgain = con.readLine();
+								
+							String strPlayAgain;
+							con.println("Do you want to play again (y/n)?");
+							strPlayAgain = con.readLine();
 							if(strPlayAgain.equalsIgnoreCase("y")){
 								System.out.println("suisei");
+								con.sleep(1000);
 								blnPlayAgain = true;
 							}else{
 								blnPlayAgain = false;
 							
-							//Write Score to another file
-							TextOutputFile HighScores = new TextOutputFile("highscores.txt", true);
-							HighScores.println(strNameP1 + "|" + intP1Wins);
-							HighScores.println(strNameP2 + "|" + intP2Wins);
-							HighScores.close();
-							
-							con.closeConsole();
-						}
+								//Write Score to another file
+								TextOutputFile HighScores = new TextOutputFile("highscores.txt", true);
+								HighScores.println(strNameP1 + "|" + intP1Wins);
+								HighScores.println(strNameP2 + "|" + intP2Wins);
+								HighScores.close();
+								
+								con.closeConsole();
+							}
 							
 						}else{
 							//Switching player after turn is finished and computer checks for win
@@ -267,140 +275,147 @@ public class CPTKyle{
 								intCurrentPlayer = 1;
 							}
 						}
-					}
-				}
-				
-				TextInputFile HighScoresInput = new TextInputFile("highscores.txt");
-				String[][] strScoresTotal = new String[999][2];
-				System.out.println("TESTING TESTING 1 2 3");
-				
-				//Read it
-				while(HighScoresInput.eof() == false){
-					String strName = HighScoresInput.readLine();
-					String strScore = HighScoresInput.readLine();
-					
-					if(strName !=null && strScore !=null){
-						strScoresTotal[intIndex][0] = strName;
-						strScoresTotal[intIndex][1] = strScore;
-						intIndex++;
-					}
-				}
-				HighScoresInput.close();
-				
-				//Bubble sorting
-				for(intRow2 = 0; intRow2 < intIndex - 1; intRow2++){
-					for(intRow = 0; intRow < intIndex - 1 - intRow2; intRow++){
-						//Making sure that both scores are not null before comparing the values
-						if(strScoresTotal[intRow] != null && strScoresTotal[intRow+1] != null &&
-							strScoresTotal[intRow][1] != null && strScoresTotal[intRow +1][1] != null){
-							
-							int intScore1 = Integer.parseInt(strScoresTotal[intRow][1]);
-							int intScore2 = Integer.parseInt(strScoresTotal[intRow+1][1]);
-							
-							System.out.println("Parsed");
-							
-							if(intScore1 < intScore2){
-								strTempName = strScoresTotal[intRow][0];
-								strTempScore = strScoresTotal[intRow][1];
-								strScoresTotal[intRow][0] = strScoresTotal[intRow+1][0];
-								strScoresTotal[intRow][1] = strScoresTotal[intRow+1][1];
-								strScoresTotal[intRow+1][0] = strTempName;
-								strScoresTotal[intRow+1][1] = strTempScore;
-							}
+						if(intCurrentPlayer == 1){
+							con.setTextColor(Color.RED);
+						}else{
+							con.setTextColor(Color.YELLOW);
 						}
 					}
 				}
 				
-				TextOutputFile FinalHighScores = new TextOutputFile("highscores.txt", false);
-				for(intRow= 0; intRow < intIndex; intRow++){
-					if(strScoresTotal[intRow][0] != null && strScoresTotal[intRow][1] != null){
-						FinalHighScores.println(strScoresTotal[intRow][0]);
-						FinalHighScores.println(strScoresTotal[intRow][1]);
-					}
-				}
-				FinalHighScores.close();
 				
-				con.clear();
-				con.println("High Scores:");
-				for(intRow = 0; intRow < intIndex; intRow++){
-					if(strScoresTotal[intRow][0] != null && strScoresTotal[intRow][1] != null){
-						con.println(strScoresTotal[intRow][0] + " | " + strScoresTotal[intRow][1]);
-					}
-				}
 						
 				}//dont delete
 		
-			}else if(chrChoice == 'v'){
-				blnMainMenu = false;
-				con.clear();
-				TextInputFile HighScoresOutput = new TextInputFile("highscores.txt");
-				con.clear();
+		}else if(chrChoice == 'v'){
+			blnMainMenu = false;
+			TextInputFile HighScoresOutput = new TextInputFile("highscores.txt");
+			con.clear();
+			
+			String strUser;
+			String strUserScore;
+			intIndex = 0;
+			String[][] strScoresTotal = new String[999][2];
 				
-				String strUser;
-				int intUserScore;
 				
-				while(HighScoresOutput.eof() == false){
-					strUser = HighScoresOutput.readLine();
-					intUserScore = HighScoresOutput.readInt();
-					con.println(strUser);
-					con.println(intUserScore);
+			while(HighScoresOutput.eof() == false){
+				strUser = HighScoresOutput.readLine();
+				strUserScore = HighScoresOutput.readLine();
+					
+				if(strUser != null && strUserScore != null){
+					System.out.println("TEST " + strUser);
+					System.out.println("TEST " + strUserScore);
+					strScoresTotal[intIndex][0] = strUser;
+					strScoresTotal[intIndex][1] = strUserScore;
+					intIndex++;
 				}
+			}
 				
-				con.println("Press the y key when you want to go back to the main menu");
-				
-				if(con.getChar() == 'y'){
-					blnMainMenu = true;
-					con.clear();
-					continue;
+			for(intRow2 = 0; intRow2 < intIndex - 1; intRow2++){
+				for(intRow = 0; intRow < intIndex - 1 - intRow2; intRow++){
+					if(strScoresTotal[intRow] != null && strScoresTotal[intRow+1] != null && strScoresTotal[intRow][1] != null && strScoresTotal[intRow+1][1] != null){
+						int intScore1 = Integer.parseInt(strScoresTotal[intRow][1]);
+						int intScore2 = Integer.parseInt(strScoresTotal[intRow+1][1]);
+						
+						System.out.println("Bubble Sort");
+						if(intScore1 < intScore2){
+							strTempName = strScoresTotal[intRow][0];
+							strTempScore = strScoresTotal[intRow][1];
+							
+							System.out.println("TEST " + strTempName);
+							System.out.println("TEST " + strTempScore);
+							
+							strScoresTotal[intRow][0] = strScoresTotal[intRow+1][0];
+							strScoresTotal[intRow][1] = strScoresTotal[intRow+1][1];
+							strScoresTotal[intRow+1][0] = strTempName;
+							strScoresTotal[intRow+1][1] = strTempScore;
+						}
+					}
 				}
-				HighScoresOutput.close();
+			}
 				
-			}else if(chrChoice == 't'){
+			for(intRow = 0; intRow < intIndex - 1; intRow++){
+				if(strScoresTotal[intRow][0] != null && strScoresTotal[intRow][1] != null){
+					con.println(strScoresTotal[intRow][0] + " | " + strScoresTotal[intRow][1]);
+				}
+			}
+				
+			HighScoresOutput.close();
+				
+				
+				
+			con.println("Press the y key when you want to go back to the main menu");
+				
+			while(con.getChar() == 'y'){
 				blnMainMenu = true;
 				con.clear();
-				
-				int intThemeChoice;
-				
-				con.println("Here are the avaliable Themes:");
-				con.println("Default (1)");
-				con.println("Christmas (2)");
-				con.println("Which theme would you like to use? (1/2)");
-				intThemeChoice = con.readInt();
-				
-				
-				
-				
-				
-			}else if(chrChoice == 'h'){
-				blnMainMenu = false;
-				con.clear();
-				
-				con.println("HOW TO PLAY CONNECT FOUR");
-				con.println("");
-				con.println("On your turn, drop one of your checkers down ANY of the columns at the top of the grid");
-				con.println("");
-				con.println("Play alternates until one player gets FOUR pieces in a row.");
-				con.println("");
-				con.println("The four in a row can either be horizontal, vertical, or diagonal");
-				con.println("");
-				con.println("Would you like to go back to the main menu? (y)");
-				
-				while(con.getChar() == 'y'){
-					blnMainMenu = true;
-					con.clear();
-					break;
-				}	
+				break;
 			}
-			if(chrChoice != 'p' && chrChoice != 'v' && chrChoice != 't' && chrChoice != 'h' && chrChoice != 'q'){
-				con.println("That letter is not an option");
-				con.println("Please pick a letter represented by the menu");
-				con.sleep(1000);
-				con.clear();
-			}
+				
+		}else if(chrChoice == 't'){
+			blnMainMenu = false;
+			con.clear();
+				
+			int intThemeChoice;
+				
+			con.println("Here are the avaliable Themes:");
+			con.println("Default (1)");
+			con.println("Christmas (2)");
+			con.println("Which theme would you like to use? (1/2)");
+			intThemeChoice = con.readInt();
 			
-			if(chrChoice == 'q'){
-				con.closeConsole();
-			}
-		}    
-	}			
+		}else if(chrChoice == 's'){
+			blnMainMenu = false;
+			con.clear();
+			
+			con.println("Welcome to the secret menu");
+			con.sleep(1500);
+			con.println("As a reward for finding this menu, I will tell you a joke");
+			con.sleep(1500);
+			con.println("What's a computer programmer's house made of?");
+			con.sleep(2000);
+			con.println("Firewalls!!!");
+			con.sleep(500);
+			con.println("HAHAHAHAHAHAHAHA....I'm so funny");
+			con.println("");
+			con.println("Press the y key when you want to go back to the main menu");
+			
+			while(con.getChar() == 'y'){
+				blnMainMenu = true;
+				con.clear();
+				break;
+			}	
+					
+		}else if(chrChoice == 'h'){
+			blnMainMenu = false;
+			con.clear();
+				
+			con.println("HOW TO PLAY CONNECT FOUR");
+			con.println("");
+			con.println("On your turn, drop one of your checkers down ANY of the columns at the top of the grid");
+			con.println("");
+			con.println("Play alternates until one player gets FOUR pieces in a row.");
+			con.println("");
+			con.println("The four in a row can either be horizontal, vertical, or diagonal");
+			con.println("");
+			con.println("Would you like to go back to the main menu? (y)");
+			
+			while(con.getChar() == 'y'){
+				blnMainMenu = true;
+				con.clear();
+				break;
+			}	
+		}
+		if(chrChoice != 'p' && chrChoice != 'v' && chrChoice != 't' && chrChoice != 's' && chrChoice != 'h' && chrChoice != 'q'){
+			con.println("That letter is not an option");
+			con.println("Please pick a letter represented by the menu");
+			con.sleep(1000);
+			con.clear();
+		}
+			
+		if(chrChoice == 'q'){
+			con.closeConsole();
+		}
+	}    
+}			
 }
