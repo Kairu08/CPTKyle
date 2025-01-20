@@ -81,6 +81,7 @@ public class CPTKyle{
 			boolean blnPlayAgain = true;
 			
 			while(blnPlayAgain){
+				blnWon = false;
 				for(intRow = 0; intRow < intRows; intRow++){
 					for(int intColumn = 0; intColumn < intColumns; intColumn++){
 						intBoard[intRow][intColumn] = 0;
