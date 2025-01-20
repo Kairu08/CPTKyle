@@ -36,14 +36,7 @@ public class CPTKyle{
 		int intCurrentPlayer = 1;
 		
 		while(blnMainMenu == true){
-			//Main Menu
-			con.println("Welcome to Connect 4");
-			con.println("Play game (p)");
-			con.println("View High Scores (v)");
-			con.println("Themes (t)");
-			con.println("Help (h)");
-			con.println("Quit (q)");
-			con.println("What would you like to do?: ");
+			KyleCPTtools.mainmenu(con);
 			chrChoice = con.readChar();
 		
 		//If statment 
@@ -146,7 +139,7 @@ public class CPTKyle{
 								con.println("Column is full, choose another one");
 						}
 					}else{
-						con.println("Invalid, please choose a number from 1 to 6");
+						con.println("Invalid, please choose a number from 1 to 7");
 					}
 				}
 				
