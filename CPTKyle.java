@@ -1,3 +1,9 @@
+//-------------------------------------------------------------------------
+// Name:         CPTKyle
+// Purpose:      Connect Four Game
+// Author:       Kyle Lam-Chan
+// Created:      Jan 6, 2025
+//-------------------------------------------------------------------------
 import arc.*;
 import java.awt.*;
 import java.awt.image.*;
